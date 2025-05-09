@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Dados Japoneses no Brasil</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background-color: black; /* Fundo preto */
+      color: white; /* Cor do texto branca */
+    }
+    .select-container {
+      margin-bottom: 20px;
+    }
+    .image-container {
+      position: relative;
+      display: inline-block;
+    }
+    img {
+      max-width: 30%;
+      height: auto;
+      margin: 20px 0;
+      transition: transform 0.3s ease;
+    }
+    .image-container:hover img, .image-container button:hover + img {
+      transform: scale(1.1);
+    }
+    .output {
+      margin-top: 10px;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+
+    button {
+      background-image: url(goias.png);
+      background-size: cover;
+      background-position: center;
+      width: 90px;
+      height: 90px;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      left: 53%;
+      transform: translate(-50%, -50%);
+      opacity: 1;
+      animation: pulse 2s infinite; /* Animação em loop */
+      background-color: transparent; /* Garante que o botão tenha fundo transparente */
+      transition: width 0.5s ease, height 0.5s ease, transform 0.5s ease; /* Transição suave */
+    }
+
+    /* Animação de aumento e diminuição de tamanho */
+    @keyframes pulse {
+      0% {
+        transform: translate(-50%, -50%) scale(1); /* Tamanho original */
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1.2); /* Aumento */
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1); /* Retorna ao tamanho original */
+      }
+    }
+
+    /* Quando o usuário passa o mouse em cima do botão */
+    button:hover {
+      animation: none; /* Para a animação */
+      opacity: 1;
+      width: 115px; /* Tamanho maior do botão */
+      height: 115px; /* Tamanho maior do botão */
+      transform: translate(-50%, -50%) scale(1.5); /* Aumenta ainda mais no hover */
+    }
+  </style>
+</head>
+<body>
+
+  <h1>População Japonesa em Goiás e no Brasil</h1>
+
+  <div class="select-container">
+    <label for="anoSelect">Selecione o ano:</label>
+    <select id="anoSelect">
+      <option value="1946">1946</option>
+      <option value="1958">1958</option>
+      <option value="1987">1987</option>
+      <option value="2023">2023</option>
+    </select>
+  </div>
+
+  <div class="image-container">
+    <img src="brasil.png">
+    <button onclick="mostrarGoias()"></button> <!-- Botão com imagem -->
+  </div>
+
+  <div class="output" id="textoGoias">Japoneses em Goiás: </div>
+  <div class="output" id="textoBrasil">Japoneses no Brasil: </div>
+
+  <script>
+    const dados = {
+      "1946": { goias: "138", brasil: "149.000" },
+      "1958": { goias: "1.800", brasil: "nenhum dado obtido" },
+      "1987": { goias: "nenhum dado obtido", brasil: "1.200.000" },
+      "2023": { goias: "nenhum dado obtido", brasil: "2.700.000" },
+    };
+
+    const selectAno = document.getElementById("anoSelect");
+    const textoGoias = document.getElementById("textoGoias");
+    const textoBrasil = document.getElementById("textoBrasil");
+
+    // Começar com textos vazios
+    function atualizarDados() {
+      textoGoias.textContent = "";
+      textoBrasil.textContent = "";
+    }
+
+    function mostrarGoias() {
+      const anoSelecionado = selectAno.value;
+      const info = dados[anoSelecionado];
+      textoGoias.textContent = `Japoneses em Goiás: ${info.goias}`;
+      textoBrasil.textContent = "";  // Apagar textoBrasil
+    }
+
+    function mostrarBrasil() {
+      const anoSelecionado = selectAno.value;
+      const info = dados[anoSelecionado];
+      textoBrasil.textContent = `Japoneses no Brasil: ${info.brasil}`;
+      textoGoias.textContent = "";  // Apagar textoGoias
+    }
+
+    // Ao clicar na imagem, exibe o número de japoneses no Brasil
+    const img = document.querySelector('.image-container img');
+    img.addEventListener('click', mostrarBrasil);  // Ao clicar na imagem, exibe dados do Brasil
+
+    selectAno.addEventListener("change", atualizarDados);  // Atualiza os dados quando o ano mudar
+    atualizarDados();  // Chama a função ao carregar a página para começar com textos vazios
+
+  </script>
+
+</body>
+</html>
